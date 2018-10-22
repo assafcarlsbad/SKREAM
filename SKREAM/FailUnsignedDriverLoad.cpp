@@ -1,7 +1,8 @@
 #include <ntifs.h>
-#include <ntimage.h>
 #include <fltKernel.h>
 #include <windef.h>
+#include <ntimage.h>
+#include "FailUnsignedDriverLoad.h"
 
 static NTSTATUS FailDriverLoad(_In_ PVOID ImageBase, _In_ NTSTATUS FailureCode)
 {
@@ -92,12 +93,14 @@ static NTSTATUS FailDriverLoad(_In_ PVOID ImageBase, _In_ NTSTATUS FailureCode)
     return status;
 }
 
-void LoadImageNotify_FailUnsignedDriverLoad(
+VOID LoadImageNotify_FailUnsignedDriverLoad(
     PUNICODE_STRING FullImageName,
     HANDLE ProcessId,
     PIMAGE_INFO ImageInfo
 )
 {
+    UNREFERENCED_PARAMETER(ProcessId);
+
     if(ImageInfo->ImageSignatureLevel == SE_SIGNING_LEVEL_UNSIGNED)
     {
         // Block driver load

@@ -176,6 +176,7 @@
     <ClCompile Include="PoolSliderMitigation.cpp" />
     <ClCompile Include="PoolBloaterMitigation.cpp" />
     <ClCompile Include="Random.cpp" />
+    <ClCompile Include="FailUnsignedDriverLoad.cpp" />
     <ClCompile Include="TypeOverwriteMitigation.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
@@ -196,6 +197,7 @@
     <ClInclude Include="Random.h" />
     <ClInclude Include="TypeOverwriteMitigation.h" />
     <ClInclude Include="VadUtils.h" />
+    <ClInclude Include="FailUnsignedDriverLoad.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

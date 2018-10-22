@@ -61,6 +61,7 @@ Unload(
 
     PsRemoveLoadImageNotifyRoutine(LoadImageNotify);
     PsSetCreateProcessNotifyRoutineEx(CreateProcessNotifyEx, TRUE);
+    PsRemoveLoadImageNotifyRoutine(LoadImageNotify_FailUnsignedDriverLoad);
 }
 
 NTSTATUS
@@ -73,7 +74,7 @@ DriverEntry(
 
     UNREFERENCED_PARAMETER(RegistryPath);
 
-    NTSTATUS status = STATUS_SUCCESS;
+    SYSTEM_CODEINTEGRITY_INFORMATION codeIntegrityInfo{};
 
     if (MmIsDriverVerifying(DriverObject)) {
         DbgPrint("*** WARNING: SKREAM might be incompatible with driver verifier! ***\n");
@@ -96,7 +97,7 @@ DriverEntry(
 	//
     // Check current code integrity options.
     //
-    SYSTEM_CODEINTEGRITY_INFORMATION codeIntegrityInfo{};
+    
     codeIntegrityInfo.Length = sizeof(codeIntegrityInfo);
     ULONG returnedLength = 0;
     status = ZwQuerySystemInformation(SystemCodeIntegrityInformation, &codeIntegrityInfo, sizeof(codeIntegrityInfo), &returnedLength);

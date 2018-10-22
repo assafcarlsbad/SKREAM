@@ -66,6 +66,9 @@
     <ClCompile Include="Random.cpp">
       <Filter>PoolOverflow Mitigation\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FailUnsignedDriverLoad.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Config.h">
@@ -97,6 +100,9 @@
     </ClInclude>
     <ClInclude Include="PoolDefs.h">
       <Filter>PoolOverflow Mitigation\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FailUnsignedDriverLoad.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
