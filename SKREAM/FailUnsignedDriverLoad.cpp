@@ -101,6 +101,11 @@ VOID LoadImageNotify_FailUnsignedDriverLoad(
 {
     UNREFERENCED_PARAMETER(ProcessId);
 
+    // Ignore non kernel-mode images.
+    if (!ImageInfo->SystemModeImage) {
+        return;
+    }
+
     if(ImageInfo->ImageSignatureLevel == SE_SIGNING_LEVEL_UNSIGNED)
     {
         // Block driver load
