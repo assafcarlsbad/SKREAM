@@ -106,6 +106,8 @@ DriverEntry(
         goto Exit;
     }
 
+    DbgPrint("CodeIntegrityOptions = 0x%x\n", codeIntegrityInfo.CodeIntegrityOptions);
+
     if(FlagOn(codeIntegrityInfo.CodeIntegrityOptions, CODEINTEGRITY_OPTION_ENABLED))
     {
         //
