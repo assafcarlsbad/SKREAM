@@ -35,6 +35,15 @@
     <Filter Include="PoolOverflow Mitigation\Header Files">
       <UniqueIdentifier>{7a50e05a-19f2-47b0-99fd-844b1c1bafe5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UnsignedDriver Mitigation">
+      <UniqueIdentifier>{864c2d39-4d65-4a25-84e8-a7ddc752982f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UnsignedDriver Mitigation\Source Files">
+      <UniqueIdentifier>{73f0bbc6-d385-47ea-94a1-dc70b882f7a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UnsignedDriver Mitigation\Header Files">
+      <UniqueIdentifier>{61e21e55-eee6-42db-8959-b651df6438cc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Inf Include="SKREAM.inf">
@@ -66,8 +75,8 @@
     <ClCompile Include="Random.cpp">
       <Filter>PoolOverflow Mitigation\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FailUnsignedDriverLoad.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="UnsignedDriverMitigation.cpp">
+      <Filter>UnsignedDriver Mitigation\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -101,8 +110,8 @@
     <ClInclude Include="PoolDefs.h">
       <Filter>PoolOverflow Mitigation\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FailUnsignedDriverLoad.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="UnsignedDriverMitigation.h">
+      <Filter>UnsignedDriver Mitigation\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

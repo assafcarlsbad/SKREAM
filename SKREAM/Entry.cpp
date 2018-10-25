@@ -2,7 +2,7 @@
 #include "TypeOverwriteMitigation.h"
 #include "PoolSliderMitigation.h"
 #include "PoolBloaterMitigation.h"
-#include "FailUnsignedDriverLoad.h"
+#include "UnsignedDriverMitigation.h"
 #include "Config.h"
 
 extern "C" {
@@ -61,7 +61,7 @@ Unload(
 
     PsRemoveLoadImageNotifyRoutine(LoadImageNotify);
     PsSetCreateProcessNotifyRoutineEx(CreateProcessNotifyEx, TRUE);
-    PsRemoveLoadImageNotifyRoutine(LoadImageNotify_FailUnsignedDriverLoad);
+    UninitializeUnsignedDriverLoadMitigation();
 }
 
 NTSTATUS
@@ -73,8 +73,6 @@ DriverEntry(
     NTSTATUS status = STATUS_SUCCESS;
 
     UNREFERENCED_PARAMETER(RegistryPath);
-
-    SYSTEM_CODEINTEGRITY_INFORMATION codeIntegrityInfo{};
 
     if (MmIsDriverVerifying(DriverObject)) {
         DbgPrint("*** WARNING: SKREAM might be incompatible with driver verifier! ***\n");
@@ -93,32 +91,11 @@ DriverEntry(
         DbgPrint("Failed to register load image notify routine, status = %08x\n", status);
         goto Exit;
     }
-	
-	//
-    // Check current code integrity options.
-    //
     
-    codeIntegrityInfo.Length = sizeof(codeIntegrityInfo);
-    ULONG returnedLength = 0;
-    status = ZwQuerySystemInformation(SystemCodeIntegrityInformation, &codeIntegrityInfo, sizeof(codeIntegrityInfo), &returnedLength);
+    status = InitializeUnsignedDriverLoadMitigation();
     if (!NT_SUCCESS(status)) {
-        DbgPrint("Failed to query system information.");
+        DbgPrint("Failed to initialize mitigation for preventing unsigned drivers from loading, status = 0x%08x", status);
         goto Exit;
-    }
-
-    DbgPrint("CodeIntegrityOptions = 0x%x\n", codeIntegrityInfo.CodeIntegrityOptions);
-
-    if(FlagOn(codeIntegrityInfo.CodeIntegrityOptions, CODEINTEGRITY_OPTION_ENABLED) && !(*KdDebuggerEnabled))
-    {
-        //
-        // DSE is enabled - register our callback and block any unsigned driver from loading.
-        // If DSE is disabled when we start, there is no need to enable our mitigation.
-        //
-        status = PsSetLoadImageNotifyRoutine(LoadImageNotify_FailUnsignedDriverLoad);
-        if (!NT_SUCCESS(status)) {
-            DbgPrint("Failed to register load image notify callback for failing unsigned drivers load");
-            goto Exit;
-        }
     }
 
     DbgPrint("SKREAM was successfully loaded!\n");
