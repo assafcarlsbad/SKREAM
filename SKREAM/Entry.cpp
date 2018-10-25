@@ -108,7 +108,7 @@ DriverEntry(
 
     DbgPrint("CodeIntegrityOptions = 0x%x\n", codeIntegrityInfo.CodeIntegrityOptions);
 
-    if(FlagOn(codeIntegrityInfo.CodeIntegrityOptions, CODEINTEGRITY_OPTION_ENABLED))
+    if(FlagOn(codeIntegrityInfo.CodeIntegrityOptions, CODEINTEGRITY_OPTION_ENABLED) && !(*KdDebuggerEnabled))
     {
         //
         // DSE is enabled - register our callback and block any unsigned driver from loading.
